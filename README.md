@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sales Dashboard
+
+A basic sales dashboard built with Next.js, TypeScript, Tailwind CSS, and Recharts.
+
+## What was added
+
+- Created a `/dashboard` page in the App Router.
+- Added an atomic component structure:
+  - `src/components/atoms` for buttons, inputs, and stat cards.
+  - `src/components/molecules` for chart controls.
+  - `src/components/organisms` for the interactive sales chart.
+  - `src/components/templates` for the dashboard layout.
+- Added mocked sales data for 2024, 2023, and 2022 in `src/lib/sales-data.ts`.
+- Added an API route at `/api/sales` that returns the sales data as JSON.
+- Added Recharts bar, line, and pie chart views.
+- Added a custom sales threshold input so users can filter months by minimum sales.
+- Replaced the starter home page with a simple entry point to the dashboard.
+
+## Data source note
+
+The mock data is shaped after Kaggle retail and e-commerce sales datasets. A relevant Kaggle example is the E-commerce Orders and Sales Performance Dataset, which includes order dates from 2022 to 2024 plus sales, profit, category, and region fields:
+
+https://www.kaggle.com/datasets/zahranusratt/e-commerce-orders-and-sales-performance-dataset
+
+The project uses local mock data instead of downloading Kaggle files because Kaggle data downloads usually require authenticated API credentials. The internal `/api/sales` route keeps the app ready for a later real API integration.
 
 ## Getting Started
 
-First, run the development server:
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the app:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Dashboard route:
 
-## Learn More
+```text
+http://localhost:3000/dashboard
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Available Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- Next.js
+- TypeScript
+- Tailwind CSS
+- Recharts
+- React
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
