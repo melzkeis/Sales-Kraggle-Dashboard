@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sales Dashboard",
+  title: "Kaggle Sales Dashboard (Mock Data)",
   description: "A Next.js sales dashboard with Recharts visualizations.",
 };
 

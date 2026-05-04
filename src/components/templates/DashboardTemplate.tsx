@@ -7,7 +7,7 @@ export function DashboardTemplate() {
         <header className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="text-sm font-medium uppercase tracking-wide text-emerald-700">
-              Sales dashboard
+              Kaggle Sales Dashboard (Mock Data)
             </p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight text-zinc-950">
               Yearly Sales Performance
