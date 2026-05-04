@@ -12,6 +12,7 @@ type ChartControlsProps = {
   onYearChange: (year: number) => void;
   onChartTypeChange: (chartType: ChartType) => void;
   onThresholdChange: (threshold: number) => void;
+  onResetThreshold: () => void;
 };
 
 const chartTypes: ChartType[] = ["bar", "line", "pie"];
@@ -23,11 +24,12 @@ export function ChartControls({
   onYearChange,
   onChartTypeChange,
   onThresholdChange,
+  onResetThreshold,
 }: ChartControlsProps) {
   return (
-    <div className="flex flex-col gap-4 border-b border-zinc-200 p-4 md:flex-row md:items-end md:justify-between">
+    <div className="capitalize flex flex-col gap-4 border-b border-border p-4 md:flex-row md:items-end md:justify-between">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">Sales year</p>
+        <p className="text-xs font-medium text-muted-foreground">Sales year</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {years.map((year) => (
             <Button key={year} isActive={activeYear === year} onClick={() => onYearChange(year)}>
@@ -38,7 +40,7 @@ export function ChartControls({
       </div>
 
       <div>
-        <p className="text-xs font-semibold uppercase tracking-wide text-zinc-500">Chart type</p>
+        <p className="text-xs font-medium text-muted-foreground">Chart type</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {chartTypes.map((type) => (
             <Button
@@ -53,19 +55,21 @@ export function ChartControls({
         </div>
       </div>
 
-      <label className="flex flex-col gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wide text-zinc-500">
-          Sales threshold
-        </span>
-        <Input
-          min={0}
-          step={1000}
-          type="number"
-          value={threshold}
-          onChange={(event) => onThresholdChange(Number(event.target.value))}
-        />
-      </label>
+      <div className="flex flex-col gap-2">
+        <span className="text-xs font-medium text-muted-foreground">Sales threshold</span>
+        <div className="flex items-center gap-2">
+          <Input
+            min={0}
+            step={1000}
+            type="number"
+            value={threshold}
+            onChange={(event) => onThresholdChange(Number(event.target.value))}
+          />
+          <Button onClick={onResetThreshold} disabled={threshold === 0}>
+            Reset
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
-

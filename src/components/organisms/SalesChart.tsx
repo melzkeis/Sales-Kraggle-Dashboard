@@ -18,6 +18,7 @@ import {
 } from "recharts";
 import { StatCard } from "@/components/atoms/StatCard";
 import { ChartControls } from "@/components/molecules/ChartControls";
+import { SalesTable } from "@/components/molecules/SalesTable";
 import type { SalesRecord } from "@/lib/sales-data";
 
 export type ChartType = "bar" | "line" | "pie";
@@ -75,87 +76,101 @@ export function SalesChart() {
   );
 
   return (
-    <section className="rounded-lg border border-zinc-200 bg-white shadow-sm">
-      <ChartControls
-        activeYear={activeYear}
-        chartType={chartType}
-        threshold={threshold}
-        onChartTypeChange={setChartType}
-        onThresholdChange={setThreshold}
-        onYearChange={setActiveYear}
-      />
-
-      <div className="grid gap-4 p-4 md:grid-cols-3">
+    <div className="flex flex-col gap-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <StatCard
           label="Total sales"
           value={currencyFormatter.format(summary.totalSales)}
           helper={`${filteredData.length} months match the current filter`}
+          trend="+12.5%"
         />
         <StatCard
           label="Total profit"
           value={currencyFormatter.format(summary.totalProfit)}
           helper="Mocked profit from monthly sales"
+          trend="+8.2%"
         />
         <StatCard
           label="Orders"
           value={summary.totalOrders.toLocaleString("en-US")}
           helper={topMonth ? `Top month: ${topMonth.month}` : "No sales above threshold"}
+          trend="+4.5%"
         />
       </div>
 
-      <div className="h-[420px] px-4 pb-5">
-        {isLoading ? (
-          <div className="flex h-full items-center justify-center rounded-lg bg-zinc-50 text-sm text-zinc-500">
-            Loading sales data...
-          </div>
-        ) : filteredData.length > 0 ? (
-          <ResponsiveContainer width="100%" height="100%">
-            {chartType === "bar" ? (
-              <BarChart data={filteredData} margin={{ bottom: 8, left: 8, right: 16, top: 16 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" />
-                <XAxis dataKey="month" stroke="#71717a" />
-                <YAxis stroke="#71717a" tickFormatter={(value) => `$${Number(value) / 1000}k`} />
-                <Tooltip formatter={(value) => currencyFormatter.format(Number(value))} />
-                <Legend />
-                <Bar dataKey="sales" fill="#047857" name="Sales" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="profit" fill="#2563eb" name="Profit" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            ) : chartType === "line" ? (
-              <LineChart data={filteredData} margin={{ bottom: 8, left: 8, right: 16, top: 16 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" />
-                <XAxis dataKey="month" stroke="#71717a" />
-                <YAxis stroke="#71717a" tickFormatter={(value) => `$${Number(value) / 1000}k`} />
-                <Tooltip formatter={(value) => currencyFormatter.format(Number(value))} />
-                <Legend />
-                <Line dataKey="sales" name="Sales" stroke="#047857" strokeWidth={3} type="monotone" />
-                <Line dataKey="profit" name="Profit" stroke="#2563eb" strokeWidth={3} type="monotone" />
-              </LineChart>
-            ) : (
-              <PieChart>
-                <Tooltip formatter={(value) => currencyFormatter.format(Number(value))} />
-                <Legend />
-                <Pie
-                  data={filteredData}
-                  dataKey="sales"
-                  innerRadius={70}
-                  nameKey="month"
-                  outerRadius={140}
-                  paddingAngle={2}
-                >
-                  {filteredData.map((record, index) => (
-                    <Cell key={record.month} fill={chartColors[index % chartColors.length]} />
-                  ))}
-                </Pie>
-              </PieChart>
-            )}
-          </ResponsiveContainer>
-        ) : (
-          <div className="flex h-full items-center justify-center rounded-lg bg-zinc-50 text-sm text-zinc-500">
-            No monthly sales meet that threshold.
-          </div>
-        )}
-      </div>
-    </section>
+      <section className="rounded-xl border border-border bg-card text-card-foreground shadow-xs">
+        <div className="flex flex-col gap-1 border-b border-border px-5 py-4">
+          <h2 className="text-base font-semibold capitalize">Sales overview</h2>
+          <p className="text-sm text-muted-foreground">
+            Recharts view for monthly sales and profit by selected year.
+          </p>
+        </div>
+
+        <ChartControls
+          activeYear={activeYear}
+          chartType={chartType}
+          threshold={threshold}
+          onChartTypeChange={setChartType}
+          onThresholdChange={setThreshold}
+          onResetThreshold={() => setThreshold(0)}
+          onYearChange={setActiveYear}
+        />
+
+        <div className="h-[420px] px-4 pb-5 pt-4">
+          {isLoading ? (
+            <div className="flex h-full items-center justify-center rounded-lg bg-muted/50 text-sm text-muted-foreground">
+              Loading sales data...
+            </div>
+          ) : filteredData.length > 0 ? (
+            <ResponsiveContainer width="100%" height="100%">
+              {chartType === "bar" ? (
+                <BarChart data={filteredData} margin={{ bottom: 8, left: 8, right: 16, top: 16 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                  <XAxis dataKey="month" stroke="var(--muted-foreground)" />
+                  <YAxis stroke="var(--muted-foreground)" tickFormatter={(value) => `$${Number(value) / 1000}k`} />
+                  <Tooltip formatter={(value) => currencyFormatter.format(Number(value))} />
+                  <Legend />
+                  <Bar dataKey="sales" fill="var(--primary)" name="Sales" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="profit" fill="var(--muted-foreground)" name="Profit" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              ) : chartType === "line" ? (
+                <LineChart data={filteredData} margin={{ bottom: 8, left: 8, right: 16, top: 16 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+                  <XAxis dataKey="month" stroke="var(--muted-foreground)" />
+                  <YAxis stroke="var(--muted-foreground)" tickFormatter={(value) => `$${Number(value) / 1000}k`} />
+                  <Tooltip formatter={(value) => currencyFormatter.format(Number(value))} />
+                  <Legend />
+                  <Line dataKey="sales" name="Sales" stroke="var(--primary)" strokeWidth={3} type="monotone" />
+                  <Line dataKey="profit" name="Profit" stroke="var(--muted-foreground)" strokeWidth={3} type="monotone" />
+                </LineChart>
+              ) : (
+                <PieChart>
+                  <Tooltip formatter={(value) => currencyFormatter.format(Number(value))} />
+                  <Legend />
+                  <Pie
+                    data={filteredData}
+                    dataKey="sales"
+                    innerRadius={70}
+                    nameKey="month"
+                    outerRadius={140}
+                    paddingAngle={2}
+                  >
+                    {filteredData.map((record, index) => (
+                      <Cell key={record.month} fill={chartColors[index % chartColors.length]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              )}
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex h-full items-center justify-center rounded-lg bg-muted/50 text-sm text-muted-foreground">
+              No monthly sales meet that threshold.
+            </div>
+          )}
+        </div>
+      </section>
+
+      <SalesTable data={filteredData} formatCurrency={currencyFormatter.format} />
+    </div>
   );
 }
-

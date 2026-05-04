@@ -8,15 +8,14 @@ export function Button({ className = "", isActive = false, ...props }: ButtonPro
   return (
     <button
       className={[
-        "inline-flex h-10 items-center justify-center rounded-md border px-4 text-sm font-medium transition",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600",
+        "inline-flex h-9 items-center justify-center rounded-md border px-3 text-sm font-medium transition",
+        "disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
         isActive
-          ? "border-emerald-700 bg-emerald-700 text-white shadow-sm"
-          : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-zinc-50",
+          ? "border-primary bg-primary text-primary-foreground shadow-sm"
+          : "border-border bg-background text-foreground hover:bg-muted",
         className,
       ].join(" ")}
       {...props}
     />
   );
 }
-

@@ -14,7 +14,11 @@ A basic sales dashboard built with Next.js, TypeScript, Tailwind CSS, and Rechar
 - Added an API route at `/api/sales` that returns the sales data as JSON.
 - Added Recharts bar, line, and pie chart views.
 - Added a custom sales threshold input so users can filter months by minimum sales.
-- Replaced the starter home page with a simple entry point to the dashboard.
+- Reworked the design of the dashboard to be much more modernized, mostly the layout from shadCN's `dashboard-01`.
+- Removed the starter home page and converted the `/dashboard` to be the root page.
+- Added a global theme along with theme toggling.
+- Added a reset button for the sales treshhold.
+- Added mock buttons for side-bar (empty for now).
 
 ## Data source note
 
@@ -66,4 +70,4 @@ npm run lint
 - Tailwind CSS
 - Recharts
 - React
-
+- shadCN
